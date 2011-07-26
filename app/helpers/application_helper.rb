@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def logo
+    	#<%= 
+    	image_tag("logo.png", :alt => "FizzBits", :class => "round") 
+    	#%>
+  end
+  
   def title
     base_title = "FizzBits"
     if @title.nil?
