@@ -38,6 +38,46 @@ describe ManagersController do
     end
   end
   
+  describe "DELETE 'destory'" do
+    before(:each) do
+      @manager = Factory(:manager)
+    end
+    
+    describe "as a non-signed-in user" do
+      it "should deny access" do
+        delete :destroy, :id => @manager
+        response.should redirect_to(signin_path)
+      end
+    end
+    
+    describe "as a non-admin user" do
+      it "should protect the page" do
+        test_sign_in(@manager)
+        delete :destroy, :id => @manager
+        response.should redirect_to(root_path)
+      end
+    end
+  
+    describe "as an admin user" do
+      before(:each) do
+        admin = Factory(:manager, :email => "admin@example.com", :admin => true)
+        test_sign_in(admin)
+      end
+      
+      it "should destroy the user" do
+        lambda do
+          delete :destroy, :id => @manager
+        end.should change(Manager, :count).by(-1)
+      end
+      
+      it "should redirect to the users page" do
+        delete :destroy, :id => @manager
+        response.should redirect_to(managers_path)
+      end
+    end
+  end
+  
+  
   describe "GET 'new'" do
     it "should be successful" do
       get 'new'
@@ -66,6 +106,9 @@ describe ManagersController do
         third = Factory(:manager, :email => "manager3@example.com")
         
         @managers = [@manager, second, third]
+        30.times do
+          @managers << Factory(:manager, :email => Factory.next(:email))
+        end
       end
       
       it "should be successful" do
@@ -80,9 +123,17 @@ describe ManagersController do
       
       it "should have an element for each manager" do
         get :index
-        @managers.each do |manager|
+        @managers[0..2].each do |manager|
           response.should have_selector("li", :content => manager.name)
         end
+      end
+      
+      it "should paginate users" do
+        get :index
+        response.should have_selector("div.pagination")
+        response.should have_selector("span.disabled", :content => "Previous")
+        response.should have_selector("a", :href => "/managers?page=2", :content => "2")
+        response.should have_selector("a", :href => "/managers?page=2", :content => "Next")
       end
     end
   end

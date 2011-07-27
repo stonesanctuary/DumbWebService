@@ -1,6 +1,13 @@
 class ManagersController < ApplicationController
   before_filter :authenticate, :only => [:index, :edit, :update]
   before_filter :correct_user, :only => [:edit, :update]
+  before_filter :admin_user, :only => [:destroy]
+  
+  def destroy
+    Manager.find(params[:id]).destroy
+    flash[:success] = "Manager destroyed."
+    redirect_to managers_path
+  end
   
   def new
     @manager = Manager.new
@@ -14,7 +21,7 @@ class ManagersController < ApplicationController
   
   def index
     @title = "All managers"
-    @managers = Manager.all
+    @managers = Manager.paginate(:page => params[:page])
   end
   
   def create
@@ -52,6 +59,11 @@ private
   def correct_user
     @manager = Manager.find(params[:id])
     redirect_to(root_path) unless current_manager?(@manager)
+  end
+  
+  def admin_user
+    redirect_to(signin_path) if current_manager.nil?
+    redirect_to(root_path) if current_manager && !current_manager.admin?
   end
   
 end

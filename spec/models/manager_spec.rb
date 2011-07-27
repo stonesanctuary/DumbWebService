@@ -59,6 +59,25 @@ describe Manager do
     user_with_duplicate_email.should_not be_valid
   end
   
+  describe "admin attribute" do
+    before(:each) do
+      @manager = Manager.create!(@attr)
+    end
+    
+    it "should respond to admin" do
+      @manager.should respond_to(:admin)
+    end
+    
+    it "should not be an admin be default" do
+      @manager.should_not be_admin
+    end
+    
+    it "should be convertable to an admin" do
+      @manager.toggle!(:admin)
+      @manager.should be_admin
+    end
+  end
+  
   describe "password validations" do
     it "should require a password" do
       Manager.new(@attr.merge(:password => "", :password_confirmation => "")).should_not be_valid

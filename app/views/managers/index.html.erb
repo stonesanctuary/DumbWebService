@@ -1,10 +1,9 @@
 <h1>All Managers</h1>
 
+<%= will_paginate %>
+
 <ul class="managers">
-	<% @managers.each do |manager| %>
-		<li>
-			<%= gravatar_for manager, :size => 30 %>
-			<%= link_to manager.name, manager %>
-		</li>
-	<% end %>
+	<%= render @managers %>
 </ul>
+
+<%= will_paginate %>

@@ -5,3 +5,6 @@ Factory.define :manager do |manager|
   manager.password_confirmation "password"
 end
 
+Factory.sequence :email do |n|
+  "person-#{n}@example.com"
+end
