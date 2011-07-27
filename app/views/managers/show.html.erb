@@ -1,0 +1,14 @@
+<table class="profile" summary="Profile information">
+	<tr>
+		<td class="main">			
+			<h1>
+				<%= gravatar_for @manager %>
+				<%= @manager.name %>
+			</h1>
+		</td>
+		<td class="sidebar round">
+			<strong>Name</strong> <%= @manager.name %><br />
+			<strong>URL</strong> <%= link_to manager_path(@manager), @manager %>
+		</td>
+	</tr>
+</table>

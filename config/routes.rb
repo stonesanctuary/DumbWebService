@@ -1,5 +1,5 @@
 Fizzbits::Application.routes.draw do
-  get "managers/new"
+
   get "pages/home"
   get "pages/about"
   get "pages/contact"
