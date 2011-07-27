@@ -1,18 +1,20 @@
 Fizzbits::Application.routes.draw do
+  resources :users
+  resources :managers
+  resources :sessions, :only => [:new, :create, :destroy]
 
+  # get "sessions/new"
   get "pages/home"
   get "pages/about"
   get "pages/contact"
   get "pages/help"
-  
 
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
   match '/signup',  :to => 'managers#new'
-  
-  resources :users
-  resources :managers
+  match '/signin',  :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

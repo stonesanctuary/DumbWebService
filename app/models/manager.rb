@@ -37,6 +37,11 @@ class Manager < ActiveRecord::Base
     return manager if manager.has_password?(submitted_password)
   end
   
+  def self.authenticate_with_salt(id, cookie_salt)
+    manager = find_by_id(id)
+    (manager && manager.salt == cookie_salt) ? manager : nil
+  end
+  
 private
   
   def encrypt_password

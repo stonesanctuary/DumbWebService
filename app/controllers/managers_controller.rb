@@ -12,6 +12,7 @@ class ManagersController < ApplicationController
   def create
     @manager = Manager.new(params[:manager])
     if @manager.save
+      sign_in @manager
       flash[:success] = "Welcome to Fizzbits"
       redirect_to @manager
     else

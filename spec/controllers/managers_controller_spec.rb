@@ -89,6 +89,12 @@ describe ManagersController do
         post :create, :manager => @attr
         flash[:success].should =~ /welcome to fizzbits/i
       end
+      
+      it "should sign the user in" do
+        post :create, :manager => @attr
+        controller.should be_signed_in
+      end
+      
     end
   end
 end
