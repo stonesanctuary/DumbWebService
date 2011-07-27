@@ -12,7 +12,8 @@ Fizzbits::Application.routes.draw do
   match '/signup',  :to => 'managers#new'
   
   resources :users
-
+  resources :managers
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
