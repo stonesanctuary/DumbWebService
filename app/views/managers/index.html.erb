@@ -1,0 +1,10 @@
+<h1>All Managers</h1>
+
+<ul class="managers">
+	<% @managers.each do |manager| %>
+		<li>
+			<%= gravatar_for manager, :size => 30 %>
+			<%= link_to manager.name, manager %>
+		</li>
+	<% end %>
+</ul>

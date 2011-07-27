@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     else
       # sign in
       sign_in manager
-      redirect_to manager
+      redirect_back_or manager
     end
   end
   

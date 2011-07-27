@@ -184,4 +184,12 @@ div.field, div.actions {
 	list-style: square;
 }
 
+ul.managers {
+	margin-top: 1em;
+}
+
+.managers li {
+	list-style: none;
+}
+
 
